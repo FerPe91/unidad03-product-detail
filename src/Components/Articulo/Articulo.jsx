@@ -1,6 +1,8 @@
 import React from 'react';
+import { useState } from 'react';
 import {
   Card,
+  Box,
   CardBody,
   CardFooter,
   Image,
@@ -15,6 +17,19 @@ import {
 import bicicleta from '../../assets/bicicleta.jpg'
 
 const Articulo = () => {
+  const [mensaje, setMensaje] = useState("")
+  const [stock, setStock] = useState(5)
+
+  const handleClick =()=>{
+    
+    if (stock > 0) {
+      setStock(stock - 1);
+      setMensaje("Gracias por su compra!");
+    } else {
+      setMensaje("Sin stock disponible!");
+    }
+  }
+
   return (
         <Card maxW='sm'
         mx='auto'>
@@ -25,7 +40,7 @@ const Articulo = () => {
               borderRadius='lg'
               boxSize='300px'
             />
-            <Stack mt='6' spacing='3'>
+            <Stack mt='2' spacing='3'>
               <Heading size='md'>BICICLETA MOUNTAIN BIKE R.29 ALUMINIO 21V SHIMANO F/DISCO SLP 10 PRO 2023</Heading>
                 <Text fontSize='lg' color='gray.600' mt='2'>
                 Descripción
@@ -49,14 +64,22 @@ const Articulo = () => {
               <Text color='blue.600' fontSize='2xl'>
                 $450
               </Text>
+              <Text color='blue.600' fontSize='2xl'>
+                Stock: {stock === 0 ? "Sin stock" :stock }
+              </Text>
             </Stack>
           </CardBody>
           <Divider />
           <CardFooter>
             <ButtonGroup spacing='2'>
-              <Button variant='solid' colorScheme='blue'>
+              <Button onClick={handleClick} variant='solid' colorScheme='blue'
+              color={stock === 0 ? "gray.400" : "white"}
+              bgColor={stock === 0 ? "gray.900" : "blue.600"}>
                 Buy now
               </Button>
+          <Box>
+              {mensaje}
+          </Box>
               <Button variant='ghost' colorScheme='blue'>
                 Add to cart
               </Button>
